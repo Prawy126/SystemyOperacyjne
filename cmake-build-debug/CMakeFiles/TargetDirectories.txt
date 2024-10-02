@@ -1,0 +1,3 @@
+/home/prawy126/Pulpit/nauka/SystemyOperacyjne/cmake-build-debug/CMakeFiles/SystemyOperacyjne.dir
+/home/prawy126/Pulpit/nauka/SystemyOperacyjne/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/prawy126/Pulpit/nauka/SystemyOperacyjne/cmake-build-debug/CMakeFiles/rebuild_cache.dir
