@@ -49,8 +49,8 @@ cmake_ninja_workdir = /home/prawy126/Pulpit/nauka/SystemyOperacyjne/cmake-build-
 
 build cmake_object_order_depends_target_SystemyOperacyjne: phony || .
 
-build CMakeFiles/SystemyOperacyjne.dir/Lab1/1_2.c.o: C_COMPILER__SystemyOperacyjne_unscanned_Debug /home/prawy126/Pulpit/nauka/SystemyOperacyjne/Lab1/1_2.c || cmake_object_order_depends_target_SystemyOperacyjne
-  DEP_FILE = CMakeFiles/SystemyOperacyjne.dir/Lab1/1_2.c.o.d
+build CMakeFiles/SystemyOperacyjne.dir/Lab1/1_3_3.c.o: C_COMPILER__SystemyOperacyjne_unscanned_Debug /home/prawy126/Pulpit/nauka/SystemyOperacyjne/Lab1/1_3_3.c || cmake_object_order_depends_target_SystemyOperacyjne
+  DEP_FILE = CMakeFiles/SystemyOperacyjne.dir/Lab1/1_3_3.c.o.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles/SystemyOperacyjne.dir
   OBJECT_FILE_DIR = CMakeFiles/SystemyOperacyjne.dir/Lab1
@@ -63,7 +63,7 @@ build CMakeFiles/SystemyOperacyjne.dir/Lab1/1_2.c.o: C_COMPILER__SystemyOperacyj
 #############################################
 # Link the executable SystemyOperacyjne
 
-build SystemyOperacyjne: C_EXECUTABLE_LINKER__SystemyOperacyjne_Debug CMakeFiles/SystemyOperacyjne.dir/Lab1/1_2.c.o
+build SystemyOperacyjne: C_EXECUTABLE_LINKER__SystemyOperacyjne_Debug CMakeFiles/SystemyOperacyjne.dir/Lab1/1_3_3.c.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/SystemyOperacyjne.dir
   POST_BUILD = :
