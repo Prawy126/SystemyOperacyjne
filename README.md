@@ -1,4 +1,4 @@
-Laboratorium 1
+# Laboratorium 1
 
 ### Zad. 1.1
 
