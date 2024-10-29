@@ -1,4 +1,4 @@
-#include <stdlib.h>
+ #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -130,7 +130,6 @@ void trim(char *s) {
 
 void safeInput(char *buffer, int size) {
     fgets(buffer, size, stdin);
-    // Usuń znak nowej linii jeśli istnieje
     if (buffer[strlen(buffer) - 1] == '\n') {
         buffer[strlen(buffer) - 1] = '\0';
     } else {
