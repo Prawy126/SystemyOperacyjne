@@ -29,6 +29,9 @@ int cyfry3(int cyfry){
 }
 
 int main(){
-    printf("%d\n",cyfry2(-13232132));
+    int cyfra = -13654;
+    printf("cyfry1(%d): %d\n", cyfra, cyfry1(cyfra));
+    printf("cyfry2(%d): %d\n", cyfra, cyfry2(cyfra));
+    printf("cyfry3(%d): %d\n", cyfra, cyfry3(cyfra));
     return 0;
 }
