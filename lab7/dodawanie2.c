@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
+#include <stdbool.h>
 
 void print_addition(int a, int b) {
     int digits_a[22] = {0}, digits_b[22] = {0}, result[23] = {0}, carry[23] = {0};
@@ -35,7 +37,7 @@ void print_addition(int a, int b) {
     }
 
     printf(" ");
-    for (i = max_len-1; i > 0; i--) {
+    for (i = max_len - 1; i > 0; i--) {
         if (carry[i] > 0) {
             printf("%d", carry[i]);
         } else {
@@ -79,10 +81,27 @@ void print_addition(int a, int b) {
 
 int main() {
     int a, b;
-    printf("Podaj liczby a i b:\na = ");
-    scanf("%d", &a);
-    printf("b = ");
-    scanf("%d", &b);
+    bool ba = true, bb = true;
+
+    while (ba || bb) {
+        printf("Podaj liczby a i b:\na = ");
+        if (scanf("%d", &a) != 1 || a > INT_MAX || a < 0) {
+            printf("Niepoprawna wartość dla a. Spróbuj ponownie.\n");
+            while(getchar() != '\n'); // clear input buffer
+            continue;
+        } else {
+            ba = false;
+        }
+
+        printf("b = ");
+        if (scanf("%d", &b) != 1 || b > INT_MAX || b < 0) {
+            printf("Niepoprawna wartość dla b. Spróbuj ponownie.\n");
+            while(getchar() != '\n'); // clear input buffer
+            ba = true; // Make sure to ask for both numbers again
+        } else {
+            bb = false;
+        }
+    }
 
     print_addition(a, b);
 
