@@ -11,112 +11,114 @@ section .data
     new_line db 0x0a ; ASCII value for newline
 
 section .bss
-    pid resq 1      ; Space for child's PID (moved before buf)
+    pid resq 1      ; Space for child's PID
     buf resb 20     ; Buffer for storing PID as string
 
 section .text
     global _start
 
 _start:
-    ; Call fork
-    mov eax, 57          ; Syscall number for fork
+    ; Wywołanie fork
+    mov eax, 57          ; Numer syscall dla fork
     syscall
 
-    ; Check the return value of fork (child or parent)
+    ; Sprawdzenie wyniku fork (dziecko czy rodzic)
     test rax, rax
-    jz child_process     ; If result is 0, it's the child process
+    jz child_process     ; Jeśli wynik to 0, to proces dziecka
 
-    ; Parent process code
-    mov [pid], rax       ; Save child's PID in variable pid
-    mov rdi, 1           ; File descriptor 1 (stdout)
-    mov rsi, parent_msg  ; Address of parent message
-    mov rdx, parent_msg_len ; Length of parent message
-    mov rax, 1           ; Syscall number for write
-    syscall              ; Print parent message
+    ; Kod procesu rodzica
+    mov [pid], rax       ; Zapisz PID dziecka w zmiennej pid
 
-    ; Display parent's PID
-    mov rax, 39          ; Syscall number for getpid
-    syscall
-    mov rdi, rax         ; Pass parent's PID to rdi
-    call print_int       ; Call print_int function
-
-    ; Display ", Child PID: "
-    mov rdi, 1           ; File descriptor 1 (stdout)
-    mov rsi, child_pid_msg ; Separator
-    mov rdx, child_pid_msg_len ; Length of separator
-    mov rax, 1           ; Syscall number for write
-    syscall              ; Print separator
-
-    ; Display child's PID
-    mov rax, [pid]       ; Load child's PID
-    mov rdi, rax         ; Pass child's PID to rdi
-    call print_int       ; Call print_int function
-
-    ; Display new line
-    mov rdi, 1           ; File descriptor 1 (stdout)
-    mov rsi, new_line    ; Newline character
-    mov rdx, 1           ; Length of newline character (1 byte)
-    mov rax, 1           ; Syscall number for write
-    syscall              ; Print newline
-
-    ; Wait for child process to finish
-    mov rax, 61          ; Syscall number for wait4
-    mov rdi, [pid]       ; Child's PID
+    ; Czekaj na zakończenie procesu dziecka
+    mov rax, 61          ; Numer syscall dla wait4
+    mov rdi, [pid]       ; PID dziecka
     mov rsi, 0           ; status = NULL
     mov rdx, 0           ; options = 0
     mov r10, 0           ; rusage = NULL
     syscall
 
-    jmp exit             ; Proceed to exit
+    ; Teraz rodzic wykonuje swoje operacje wyjścia
+    mov rdi, 1           ; Deskryptor pliku 1 (stdout)
+    mov rsi, parent_msg  ; Adres komunikatu rodzica
+    mov rdx, parent_msg_len ; Długość komunikatu rodzica
+    mov rax, 1           ; Numer syscall dla write
+    syscall              ; Wyświetl komunikat rodzica
+
+    ; Wyświetl PID rodzica
+    mov rax, 39          ; Numer syscall dla getpid
+    syscall
+    mov rdi, rax         ; Przekaż PID rodzica do rdi
+    call print_int       ; Wywołaj funkcję print_int
+
+    ; Wyświetl ", Child PID: "
+    mov rdi, 1           ; Deskryptor pliku 1 (stdout)
+    mov rsi, child_pid_msg ; Separator
+    mov rdx, child_pid_msg_len ; Długość separatora
+    mov rax, 1           ; Numer syscall dla write
+    syscall              ; Wyświetl separator
+
+    ; Wyświetl PID dziecka
+    mov rax, [pid]       ; Załaduj PID dziecka
+    mov rdi, rax         ; Przekaż PID dziecka do rdi
+    call print_int       ; Wywołaj funkcję print_int
+
+    ; Wyświetl nową linię
+    mov rdi, 1           ; Deskryptor pliku 1 (stdout)
+    mov rsi, new_line    ; Znak nowej linii
+    mov rdx, 1           ; Długość znaku nowej linii (1 bajt)
+    mov rax, 1           ; Numer syscall dla write
+    syscall              ; Wyświetl nową linię
+
+    jmp exit             ; Przejdź do wyjścia
 
 child_process:
-    ; Child process code
+    ; Kod procesu dziecka
     mov rdi, 1
     mov rsi, child_msg
     mov rdx, child_msg_len
     mov rax, 1
     syscall
 
-    ; Display child's PID
-    mov rax, 39          ; Syscall number for getpid
+    ; Wyświetl PID dziecka
+    mov rax, 39          ; Numer syscall dla getpid
     syscall
-    mov rdi, rax         ; Pass child's PID to rdi
-    call print_int       ; Call print_int function
+    mov rdi, rax         ; Przekaż PID dziecka do rdi
+    call print_int       ; Wywołaj funkcję print_int
 
-    ; Display new line
-    mov rdi, 1           ; File descriptor 1 (stdout)
-    mov rsi, new_line    ; Newline character
-    mov rdx, 1           ; Length of newline character (1 byte)
-    mov rax, 1           ; Syscall number for write
+    ; Wyświetl nową linię
+    mov rdi, 1           ; Deskryptor pliku 1 (stdout)
+    mov rsi, new_line    ; Znak nowej linii
+    mov rdx, 1           ; Długość znaku nowej linii (1 bajt)
+    mov rax, 1           ; Numer syscall dla write
     syscall
 
 exit:
-    ; Exit program
-    mov rax, 60          ; Syscall number for exit
-    mov rdi, 0           ; Exit code 0 (success)
+    ; Zakończ program
+    mov rax, 60          ; Numer syscall dla exit
+    mov rdi, 0           ; Kod wyjścia 0 (sukces)
     syscall
 
 print_int:
-    ; Convert number in rdi to string
-    mov rax, rdi         ; Place number to convert in rax
-    mov rcx, 10          ; Set base (10) for decimal conversion
-    lea rdi, [buf + 20]  ; Set pointer to end of buffer
-    mov byte [rdi], 0    ; Add null terminator at the end of buffer
+    ; Konwersja liczby w rdi na ciąg znaków
+    mov rax, rdi         ; Umieść liczbę do konwersji w rax
+    mov rcx, 10          ; Ustaw bazę (10) dla konwersji dziesiętnej
+    lea rdi, [buf + 20]  ; Ustaw wskaźnik na koniec bufora
+    mov byte [rdi], 0    ; Dodaj znak null na końcu bufora
 
 print_int_loop:
     dec rdi
-    xor rdx, rdx         ; Clear rdx
-    div rcx              ; Divide rax by 10
-    add dl, '0'          ; Convert digit to ASCII
-    mov [rdi], dl        ; Store digit in buffer
-    test rax, rax        ; Check if rax is zero
-    jnz print_int_loop   ; If not, continue loop
+    xor rdx, rdx         ; Wyzeruj rdx
+    div rcx              ; Podziel rax przez 10
+    add dl, '0'          ; Konwertuj cyfrę na ASCII
+    mov [rdi], dl        ; Zapisz cyfrę w buforze
+    test rax, rax        ; Sprawdź, czy rax jest zerem
+    jnz print_int_loop   ; Jeśli nie, kontynuuj pętlę
 
-    ; Print the number
-    mov rsi, rdi         ; Set rsi to start of processed string
-    mov rdx, buf + 20    ; Set rdx to end of buffer
-    sub rdx, rsi         ; Calculate length of the string
-    mov rax, 1           ; Syscall number for write
-    mov rdi, 1           ; File descriptor 1 (stdout)
+    ; Wyświetl liczbę
+    mov rsi, rdi         ; Ustaw rsi na początek przetworzonego ciągu
+    mov rdx, buf + 20    ; Ustaw rdx na koniec bufora
+    sub rdx, rsi         ; Oblicz długość ciągu
+    mov rax, 1           ; Numer syscall dla write
+    mov rdi, 1           ; Deskryptor pliku 1 (stdout)
     syscall
     ret
