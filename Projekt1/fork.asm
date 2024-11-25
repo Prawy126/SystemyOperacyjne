@@ -122,3 +122,8 @@ print_int_loop:
     mov rdi, 1           ; Deskryptor pliku 1 (stdout)
     syscall
     ret
+
+
+;nasm -f elf64 ASMwrite.asm -o ASMwrite.o
+
+;ld ASMwrite.o -o ASMwrite
