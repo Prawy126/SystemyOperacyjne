@@ -108,6 +108,8 @@ print_int_loop:
     syscall              ; Wyświetl ciąg
     ret                  ; Zakończ funkcję
 
+
+
 ;nasm -f elf64 ASMwrite.asm -o ASMwrite.o
 
 ;ld ASMwrite.o -o ASMwrite
