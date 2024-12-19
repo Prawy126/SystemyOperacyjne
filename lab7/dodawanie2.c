@@ -87,7 +87,7 @@ int main() {
         printf("Podaj liczby a i b:\na = ");
         if (scanf("%d", &a) != 1 || a > INT_MAX || a < 0) {
             printf("Niepoprawna wartość dla a. Spróbuj ponownie.\n");
-            while(getchar() != '\n'); // clear input buffer
+            while(getchar() != '\n'); 
             continue;
         } else {
             ba = false;
@@ -96,8 +96,8 @@ int main() {
         printf("b = ");
         if (scanf("%d", &b) != 1 || b > INT_MAX || b < 0) {
             printf("Niepoprawna wartość dla b. Spróbuj ponownie.\n");
-            while(getchar() != '\n'); // clear input buffer
-            ba = true; // Make sure to ask for both numbers again
+            while(getchar() != '\n'); 
+            ba = true; 
         } else {
             bb = false;
         }
